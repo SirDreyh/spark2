@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SparkStack Remote Jobs</title>
+<style>
+/* RESET & BASE */
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Arial', sans-serif; line-height:1.6; color:#333; background-color:#fefefb; overflow-x:hidden; }
+a { text-decoration:none; color:inherit; }
+
+/* NAVBAR */
+nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 20px; position:sticky; top:0;
+    background-color: rgba(150,255,150,0.95);
+    z-index:1000; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+nav .logo { font-weight:bold; font-size:24px; color:#2e2e2e; }
+nav ul { display:flex; gap:20px; flex-wrap:wrap; justify-content:flex-end; }
+nav ul li { list-style:none; }
+nav ul li a { transition: color 0.3s ease, transform 0.2s ease; }
+nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold; }
+/* MOBILE MENU */
+.menu-toggle {
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* Responsive Sidebar */
+@media(max-width:768px){
+
+    .menu-toggle {
+        display:block;
+    }
+
+    .nav-links {
+        position:fixed;
+        top:0;
+        right:-100%;
+        height:100vh;
+        width:250px;
+        background:#ffffff;
+        flex-direction:column;
+        padding-top:80px;
+        gap:25px;
+        align-items:center;
+        transition:right 0.4s ease;
+        box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+    }
+
+    .nav-links.active {
+        right:0;
+    }
+
+    body.dark .nav-links {
+        background:#1e1e1e;
+    }
+}
+/* HERO SECTION */
+.hero {
+    background-image:
+    linear-gradient(rgba(150,255,150,0.1), rgba(150,255,150,0.1)), 
+    url('hero-image.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    text-align: center; 
+    padding: 40px 20px 80px 20px;
+    color: #fff9a6;
+    position: relative;
+}
+.hero h1 {
+    font-size: 50px;          
+    color: #fff9a6;           
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6); 
+    margin-bottom: 20px;
+    animation: fadeSlideUp 1s ease forwards, floatText 4s ease-in-out infinite;
+}
+.hero p {
+    font-size: 20px;          
+    color: #fff9a6;           
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.5); 
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    animation: fadeSlideUp 1.5s ease forwards, floatText 4s ease-in-out infinite;
+}
+.hero-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #0d990d; 
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    animation: fadeSlideUp 1.8s ease forwards, pulse 2s infinite;
+}
+.hero-btn:hover {
+    background-color: #088808; 
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 20px 4px rgba(13,153,13,0.7);
+}
+
+/* FLOAT ANIMATION */
+@keyframes floatText {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); } 
+    100% { transform: translateY(0); }
+}
+
+/* ABOUT */
+.about { padding:60px 20px; text-align:center; background-color:#e6ffe6; }
+.about h2 { font-size:28px; margin-bottom:15px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.about p { max-width:600px; margin:0 auto; font-size:16px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+
+/* WHY CHOOSE US */
+.why-choose-us { padding:60px 20px; text-align:center; background-color:#f0fff0; }
+.why-choose-us h2 { font-size:28px; margin-bottom:30px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.features { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+.feature-card {
+    background:#9fff9f;
+    border-radius:12px;
+    padding:20px;
+    width:220px;
+    text-align:center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 1s ease;
+    opacity:0;
+    transform:translateY(20px);
+}
+.feature-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+.feature-card h3 { margin-bottom:10px; font-size:18px; color:#2e2e2e; }
+.feature-card p { font-size:14px; color:#2e2e2e; }
+
+/* JOB LISTINGS */
+.jobs { padding:60px 20px; text-align:center; }
+.jobs h2 { font-size:28px; margin-bottom:30px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.job-cards { display:flex; flex-direction:column; gap:15px; align-items:center; }
+.job-card {
+    background-color:#9fff9f;
+    padding:20px; border-radius:12px; width:260px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 1s ease;
+    opacity:0; transform:translateY(20px);
+    position:relative;
+}
+.job-card:hover { 
+    transform:translateY(-5px); 
+    box-shadow:0 10px 25px rgba(0,0,0,0.25); 
+}
+.job-card h3 { 
+    margin-bottom:10px; color:#2e2e2e; font-size:18px; 
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition: transform 0.3s ease;
+}
+.job-card:hover h3 { 
+    transform: translateY(-5px);
+}
+.job-card::after {
+    content:""; 
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    border-radius:12px; 
+    box-shadow:0 0 0 rgba(13,153,13,0.4);
+    opacity:0; transition:opacity 0.3s ease, box-shadow 0.3s ease;
+    pointer-events:none;
+}
+.job-card:hover::after { 
+    opacity:1; 
+    box-shadow:0 0 20px 4px rgba(13,153,13,0.5);
+}
+.job-card p { font-size:14px; margin-bottom:10px; }
+.job-card a { color:#0d990d; font-weight:bold; font-size:14px; transition:color 0.3s ease; }
+.job-card a:hover { color:#088808; }
+
+/* TESTIMONIALS CAROUSEL */
+.testimonials { padding:60px 20px; text-align:center; background-color:#f0fff0; }
+.testimonials h2 { font-size:28px; margin-bottom:30px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.testimonial-carousel { position: relative; max-width:500px; margin:0 auto; overflow:hidden; height:180px; }
+.testimonial-card {
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    padding:20px;
+    border-radius:12px;
+    background:#9fff9f;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    opacity:0;
+    transform:translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    font-style:italic;
+}
+.testimonial-card.active { opacity:1; transform:translateY(0); }
+.testimonial-card h4 { margin-top:15px; color:#2e2e2e; font-weight:bold; font-style:normal; }
+.carousel-dots { text-align:center; margin-top:15px; }
+.carousel-dots .dot { display:inline-block; width:12px; height:12px; background:#0d990d; border-radius:50%; margin:0 5px; cursor:pointer; opacity:0.5; transition:opacity 0.3s ease, transform 0.3s ease; }
+.carousel-dots .dot.active { opacity:1; transform:scale(1.2); }
+.arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:28px; color:#0d990d; cursor:pointer; user-select:none; opacity:0.7; transition:opacity 0.3s ease; z-index:10; }
+.arrow:hover { opacity:1; } .arrow.left { left:0; } .arrow.right { right:0; }
+
+/* APPLY FORM */
+.contact { padding:60px 20px; text-align:center; background-color:#e6ffe6; }
+.contact h2 { font-size:28px; margin-bottom:20px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.contact form { max-width:400px; margin:0 auto; display:flex; flex-direction:column; gap:12px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.contact input, .contact textarea { padding:12px; border:1px solid #ccc; border-radius:6px; font-size:16px; }
+.contact button { padding:12px; background-color:#0d990d; color:white; border:none; font-size:16px; border-radius:8px; cursor:pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
+.contact button:hover { background-color:#088808; transform:translateY(-2px) scale(1.02); }
+
+/* FOOTER */
+footer { background-color:#2e2e2e; color:white; text-align:center; padding:20px 20px; font-size:14px; }
+
+/* WhatsApp Button */
+.whatsapp-btn { position: fixed; bottom: 15px; right: 15px; background-color:#0d990d; color:white; padding:12px 18px; border-radius:50px; font-size:16px; text-align:center; text-decoration:none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease; z-index:10000; }
+@media(max-width:500px){ .whatsapp-btn { opacity:0.8; padding:10px 14px; font-size:14px; } }
+.whatsapp-btn:hover { background-color:#088808; transform:scale(1.1); opacity:1; }
+
+/* BACK TO TOP BUTTON */
+#backToTop { position: fixed; bottom: 70px; right: 15px; display: none; background: #0d990d; color: white; border: none; padding: 12px 16px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease; }
+#backToTop:hover { background: #088808; transform: scale(1.1); }
+
+/* DARK MODE TOGGLE - Top Right */
+.dark-toggle { position: fixed; top: 20px; right: 20px; background:#0d990d; color:#fff; padding:10px 14px; border-radius:50px; cursor:pointer; z-index:10001; font-size:16px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease; }
+.dark-toggle:hover { transform:scale(1.1); background:#088808; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .hero h1 { font-size:36px; }
+    .hero p { font-size:16px; }
+    .job-card, .feature-card { width:90%; }
+    nav ul { flex-direction:column; align-items:flex-start; gap:10px; }
+    .testimonial-carousel { height:auto; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeSlideUp { 0% { opacity:0; transform:translateY(30px); } 100% { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
+@keyframes popUp { 0% { transform: scale(0.7); opacity:0; } 100% { transform: scale(1); opacity:1; } }
+.active { opacity:1 !important; transform:translateY(0) !important; }
+
+/* DARK MODE STYLES - FULL FIX */
+body.dark {
+    background:#121212;
+    color:#f0f0f0;
+}
+
+/* Navbar */
+body.dark nav {
+    background: rgba(25,25,25,0.95);
+}
+body.dark nav .logo,
+body.dark nav ul li a {
+    color:#ffffff;
+}
+
+/* Section backgrounds */
+body.dark .about,
+body.dark .why-choose-us,
+body.dark .jobs,
+body.dark .testimonials,
+body.dark .contact {
+    background:#181818;
+}
+
+/* Cards */
+body.dark .feature-card,
+body.dark .job-card,
+body.dark .testimonial-card {
+    background:#1e1e1e;
+    color:#f0f0f0;
+}
+
+/* Text inside cards */
+body.dark .feature-card h3,
+body.dark .job-card h3,
+body.dark .testimonial-card h4,
+body.dark p,
+body.dark h2 {
+    color:#f5f5f5;
+}
+
+/* Hero text */
+body.dark .hero h1,
+body.dark .hero p {
+    color:#fff9a6;
+    text-shadow:2px 2px 10px rgba(0,0,0,0.9);
+}
+
+/* Buttons */
+body.dark .hero-btn,
+body.dark .contact button,
+body.dark .whatsapp-btn,
+body.dark .dark-toggle,
+body.dark #backToTop {
+    background:#0d990d;
+    color:white;
+}
+
+/* Footer */
+body.dark footer {
+    background:#000;
+    color:#ccc;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<<nav>
+    <div class="logo">SparkStack</div>
+
+    <div class="menu-toggle">&#9776;</div>
+
+    <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#jobs">Jobs</a></li>
+        <li><a href="#contact">Apply</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <h1>Work Remotely with SparkStack</h1>
+    <p>Discover remote opportunities that fit your skills and lifestyle. Apply in seconds!</p>
+    <a href="#jobs" class="hero-btn">View Jobs</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <h2>About SparkStack</h2>
+    <p>SparkStack connects talent with the best remote jobs. Explore positions in Data Entry, Customer Service, Payroll Management, and more. Start your remote career today!</p>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-choose-us" id="why">
+    <h2>Why Choose SparkStack?</h2>
+    <div class="features">
+        <div class="feature-card">
+            <h3>💼 Verified Remote Jobs</h3>
+            <p>All listings are thoroughly checked so you never waste time on scams.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⚡ Quick Application</h3>
+            <p>Apply in seconds with our easy-to-use platform and fast submission.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🌐 Global Opportunities</h3>
+            <p>Find jobs from companies around the world that suit your skills.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🤝 Professional Support</h3>
+            <p>Our team is ready to guide you through every step of your application.</p>
+        </div>
+    </div>
+</section>
+
+<!-- JOB LISTINGS -->
+<section class="jobs" id="jobs">
+    <h2>Available Remote Jobs</h2>
+    <div class="job-cards">
+        <div class="job-card">
+            <h3>📄 Data Entry Specialist</h3>
+            <p>Remote | Full-time | Admin</p>
+            <a href="#contact" class="apply-link" data-job="Data Entry Specialist">Apply Now</a>
+        </div>
+        <div class="job-card">
+            <h3>☎️ Customer Service Representative</h3>
+            <p>Remote | Full-time | Support</p>
+            <a href="#contact" class="apply-link" data-job="Customer Service Representative">Apply Now</a>
+        </div>
+        <div class="job-card">
+            <h3>💰 Payroll Manager</h3>
+            <p>Remote | Full-time | Finance</p>
+            <a href="#contact" class="apply-link" data-job="Payroll Manager">Apply Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-carousel">
+        <span class="arrow left">&#10094;</span>
+        <span class="arrow right">&#10095;</span>
+        <div class="testimonial-card active">
+            <p>"SparkStack helped me land a remote Data Entry job in just a week! The process was smooth, and the support team was always there to guide me."</p>
+            <h4>- Jane D.</h4>
+        </div>
+        <div class="testimonial-card">
+            <p>"The jobs listed are genuine and easy to apply for. I recommend SparkStack to anyone looking for remote opportunities."</p>
+            <h4>- Mark T.</h4>
+        </div>
+        <div class="testimonial-card">
+            <p>"I loved the Why Choose Us section; it gave me confidence that I was applying to real companies with real remote jobs."</p>
+            <h4>- Lucy P.</h4>
+        </div>
+    </div>
+    <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</section>
+
+<!-- APPLY FORM -->
+<section class="contact" id="contact">
+    <h2>Apply Now</h2>
+    <form id="applyForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="text" id="jobTitle" placeholder="Job Title" readonly>
+        <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+        <button type="submit">Submit Application</button>
+    </form>
+</section>
+
+<!-- BACK TO TOP BUTTON -->
+<button id="backToTop">&#8679;</button>
+
+<!-- DARK MODE TOGGLE -->
+<button class="dark-toggle">🌓</button>
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/1234567890" target="_blank" class="whatsapp-btn">💬 WhatsApp</a>
+
+<!-- FOOTER -->
+<footer>
+    &copy; 2026 SparkStack. All rights reserved.
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" style="display:none; position:fixed; top:0; left:0;width:100%;height:100%;background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:20000;">
+    <div style="background:white; padding:30px; border-radius:12px; text-align:center; max-width:300px;">
+        <h3>Application Sent!</h3>
+        <p>Thank you for applying. We will contact you soon.</p>
+        <button onclick="document.getElementById('successModal').style.display='none';" style="padding:10px 20px; background:#0d990d; color:white; border:none; border-radius:6px; cursor:pointer;">Close</button>
+    </div>
+</div>
+
+<script>
+// DARK MODE
+const toggle = document.querySelector('.dark-toggle');
+toggle.addEventListener('click', () => { document.body.classList.toggle('dark'); });
+
+// BACK TO TOP
+const backBtn = document.getElementById('backToTop');
+window.onscroll = () => { backBtn.style.display = window.scrollY > 300 ? 'block' : 'none'; };
+backBtn.addEventListener('click', () => { window.scrollTo({top:0, behavior:'smooth'}); });
+
+// APPLY FORM
+const applyForm = document.getElementById('applyForm');
+document.querySelectorAll('.apply-link').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('jobTitle').value = e.target.dataset.job;
+        document.getElementById('jobTitle').focus();
+    });
+});
+applyForm.addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('successModal').style.display='flex';
+    applyForm.reset();
+});
+
+// TESTIMONIAL CAROUSEL
+let currentTestimonial = 0;
+const cards = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.dot');
+const showTestimonial = index => {
+    cards.forEach(c => c.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    cards[index].classList.add('active');
+    dots[index].classList.add('active');
+};
+document.querySelector('.arrow.left').addEventListener('click', () => {
+    currentTestimonial = (currentTestimonial-1+cards.length)%cards.length; showTestimonial(currentTestimonial);
+});
+document.querySelector('.arrow.right').addEventListener('click', () => {
+    currentTestimonial = (currentTestimonial+1)%cards.length; showTestimonial(currentTestimonial);
+});
+dots.forEach((dot,i)=>dot.addEventListener('click',()=>{currentTestimonial=i; showTestimonial(i);}));
+
+// SCROLL ANIMATION
+const animItems = document.querySelectorAll('.about h2, .about p, .why-choose-us h2, .feature-card, .jobs h2, .job-card, .testimonials h2, .contact h2, .contact form');
+window.addEventListener('scroll',()=>{
+    const triggerBottom = window.innerHeight*0.85;
+    animItems.forEach(item=>{
+        const boxTop = item.getBoundingClientRect().top;
+        if(boxTop < triggerBottom){ item.classList.add('active'); }
+    });
+});
+// MOBILE MENU
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+</script>
+</body>
+</html>
