@@ -198,66 +198,31 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
     min-height: 280px;
 }
 
-.testimonial-card {
-    position: absolute;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-
-    padding: 40px 30px;
-    border-radius: 20px;
-
-    background: linear-gradient(135deg, #0f3d2e, #145a3a);
-    color: #fff;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    text-align: center;
-}
-
 .testimonial-card.active {
     opacity: 1;
 }
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border: 1px solid rgba(255,255,255,0.15);
-
-    box-shadow:
-        0 20px 60px rgba(0, 150, 60, 0.35),
-        inset 0 0 25px rgba(255,255,255,0.05);
-
-    color: #ffffff;
-    font-size: 26px;
-    font-style: italic;
-    line-height: 1.9;
-    text-align: center;
-
-    opacity: 0;
-    transform: translateY(30px) scale(0.96);
-    transition: all 0.9s cubic-bezier(.17,.67,.83,.67);
-}
+   
 .testimonial-card {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 30px 25px;
+    padding: 25px 20px;
     border-radius: 16px;
     background: linear-gradient(135deg, #064e3b, #065f46, #047857);
     color: #ffffff;
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    transform: translateY(15px);
+    transition: opacity 1s ease, transform 1s ease;
     font-style: italic;
     text-align: center;
 }
 
 .testimonial-card.active {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .testimonial-card p {
@@ -311,10 +276,10 @@ footer { background-color:#2e2e2e; color:white; text-align:center; padding:20px 
     nav ul { flex-direction:column; align-items:flex-start; gap:10px; }
     .testimonial-carousel {
     position: relative;
-    max-width: 750px;
+    max-width: 500px;
     margin: 0 auto;
     overflow: hidden;
-    height: 320px;
+    height: 220px;
 }
 
 /* ANIMATIONS */
@@ -391,7 +356,7 @@ body.dark footer {
 <body>
 
 <!-- NAVBAR -->
-<<nav>
+<nav>
     <div class="logo">SparkStack</div>
 
     <div class="menu-toggle">&#9776;</div>
@@ -568,7 +533,7 @@ setInterval(() => {
         currentTestimonial = 0;
     }
     showTestimonial(currentTestimonial);
-}, 6000); // changes every 6 seconds
+}, 8000); // changes every 8 seconds
 
 // SCROLL ANIMATION
 const animItems = document.querySelectorAll('.about h2, .about p, .why-choose-us h2, .feature-card, .jobs h2, .job-card, .testimonials h2, .contact h2, .contact form');
