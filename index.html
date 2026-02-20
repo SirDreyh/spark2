@@ -483,6 +483,11 @@ document.querySelector('.arrow.right').addEventListener('click', () => {
     currentTestimonial = (currentTestimonial+1)%cards.length; showTestimonial(currentTestimonial);
 });
 dots.forEach((dot,i)=>dot.addEventListener('click',()=>{currentTestimonial=i; showTestimonial(i);}));
+// AUTO SLIDE EVERY 4 SECONDS
+setInterval(() => {
+    currentTestimonial = (currentTestimonial + 1) % cards.length;
+    showTestimonial(currentTestimonial);
+}, 4000);
 
 // SCROLL ANIMATION
 const animItems = document.querySelectorAll('.about h2, .about p, .why-choose-us h2, .feature-card, .jobs h2, .job-card, .testimonials h2, .contact h2, .contact form');
