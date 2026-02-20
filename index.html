@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SparkStack Remote Jobs</title>
 <style>
+    /* GLOW FLOAT ANIMATION */
+@keyframes glowFloat {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+.testimonial-card.active {
+    animation: glowFloat 6s ease-in-out infinite;
+}
 /* RESET & BASE */
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
 body { font-family:'Arial', sans-serif; line-height:1.6; color:#333; background-color:#fefefb; overflow-x:hidden; }
@@ -181,20 +191,71 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
 .testimonials h2 { font-size:28px; margin-bottom:30px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
 .testimonial-carousel { position: relative; max-width:500px; margin:0 auto; overflow:hidden; min-height:200px; }
 .testimonial-card {
-    position:absolute;
-    top:0; left:0;
-    width:100%;
-    padding:20px;
-    border-radius:12px;
-    background:#9fff9f;
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
-    opacity:0;
-    transform:translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    font-style:italic;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 70px 60px;
+    border-radius: 28px;
+
+    /* Emerald glass gradient */
+    background: linear-gradient(
+        135deg,
+        rgba(5, 60, 20, 0.85),
+        rgba(0, 120, 40, 0.75)
+    );
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    box-shadow:
+        0 20px 60px rgba(0, 150, 60, 0.35),
+        inset 0 0 25px rgba(255,255,255,0.05);
+
+    color: #ffffff;
+    font-size: 26px;
+    font-style: italic;
+    line-height: 1.9;
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+    transition: all 0.9s cubic-bezier(.17,.67,.83,.67);
 }
-.testimonial-card.active { opacity:1; transform:translateY(0); }
-.testimonial-card h4 { margin-top:15px; color:#2e2e2e; font-weight:bold; font-style:normal; }
+.testimonial-card.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.testimonial-card h4 {
+    margin-top: 35px;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-style: normal;
+    color: rgba(255,255,255,0.75);
+}
+.testimonial-card::before {
+    content: "“";
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    font-size: 120px;
+    font-weight: bold;
+    color: rgba(255,255,255,0.06);
+}
+
+.testimonial-card::after {
+    content: "”";
+    position: absolute;
+    bottom: 25px;
+    right: 35px;
+    font-size: 120px;
+    font-weight: bold;
+    color: rgba(255,255,255,0.06);
+}
 .carousel-dots { text-align:center; margin-top:15px; }
 .carousel-dots .dot { display:inline-block; width:12px; height:12px; background:#0d990d; border-radius:50%; margin:0 5px; cursor:pointer; opacity:0.5; transition:opacity 0.3s ease, transform 0.3s ease; }
 .carousel-dots .dot.active { opacity:1; transform:scale(1.2); }
@@ -231,7 +292,12 @@ footer { background-color:#2e2e2e; color:white; text-align:center; padding:20px 
     .hero p { font-size:16px; }
     .job-card, .feature-card { width:90%; }
     nav ul { flex-direction:column; align-items:flex-start; gap:10px; }
-    .testimonial-carousel { height:auto; }
+    .testimonial-carousel {
+    position: relative;
+    max-width: 750px;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 320px;
 }
 
 /* ANIMATIONS */
