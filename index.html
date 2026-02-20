@@ -13,7 +13,7 @@
 }
 
 .testimonial-card.active {
-    animation: glowFloat 6s ease-in-out infinite;
+    animation: glowFloat 7s ease-in-out infinite;
 }
 /* RESET & BASE */
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
@@ -191,19 +191,20 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
 .testimonials h2 { font-size:28px; margin-bottom:30px; opacity:0; transform:translateY(20px); transition:all 1s ease; }
 .testimonial-carousel { position: relative; max-width:500px; margin:0 auto; overflow:hidden; min-height:200px; }
 .testimonial-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 70px 60px;
-    border-radius: 28px;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 40px 30px;
+    border-radius: 20px;
 
-    /* Emerald glass gradient */
-    background: linear-gradient(
-        135deg,
-        rgba(5, 60, 20, 0.85),
-        rgba(0, 120, 40, 0.75)
-    );
+    background: linear-gradient(135deg, #0f3d2e, #145a3a);
+    color: #fff;
+    
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25)
+    backdrop-filter: blur(10px);
+
+    text-align: center;
+    transition: all 0.45 ease;
+}
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -227,9 +228,11 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
 .testimonial-card.active {
     opacity: 1;
     transform: translateY(0) scale(1);
+    max-width: 90%;
+    margin: auto;
 }
 .testimonial-card h4 {
-    margin-top: 35px;
+    margin-top: 15px;
     font-size: 17px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -242,7 +245,7 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
     position: absolute;
     top: 25px;
     left: 35px;
-    font-size: 120px;
+    font-size: 70px;
     font-weight: bold;
     color: rgba(255,255,255,0.06);
 }
@@ -252,7 +255,7 @@ nav ul li a:hover { color:#0d990d; transform: translateY(-3px); font-weight:bold
     position: absolute;
     bottom: 25px;
     right: 35px;
-    font-size: 120px;
+    font-size: 70px;
     font-weight: bold;
     color: rgba(255,255,255,0.06);
 }
@@ -553,7 +556,7 @@ dots.forEach((dot,i)=>dot.addEventListener('click',()=>{currentTestimonial=i; sh
 setInterval(() => {
     currentTestimonial = (currentTestimonial + 1) % cards.length;
     showTestimonial(currentTestimonial);
-}, 4000);
+}, 7000);
 
 // SCROLL ANIMATION
 const animItems = document.querySelectorAll('.about h2, .about p, .why-choose-us h2, .feature-card, .jobs h2, .job-card, .testimonials h2, .contact h2, .contact form');
