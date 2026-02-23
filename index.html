@@ -329,15 +329,50 @@ body.dark .hero p {
 }
 
 /* Buttons */
-body.dark .hero-btn,
-body.dark .contact button,
-body.dark .whatsapp-btn,
-body.dark .dark-toggle,
-body.dark #backToTop {
-    background:#0d990d;
-    color:white;
-}
 
+#darkModeBtn,
+#backToTopBtn {
+  position: fixed;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 150, 0.6);
+  background: rgba(0, 255, 150, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #00cc88;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 255, 150, 0.25);
+  z-index: 1000;
+}
+#darkModeBtn {
+  bottom: 85px;
+}
+#backToTop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+}
+#darkModeBtn:hover,
+#backToTop:hover {
+  transform: scale(1.1);
+}
+#backToTopBtn:hover {
+    background: #16a34a;
+}
 /* Footer */
 body.dark footer {
     background:#000;
@@ -487,9 +522,9 @@ body.dark footer {
     </form>
 </section>
 
-<div class="float-buttons">
-    <button id="darkModeBtn" class="float-btn">☀️</button>
-    <button id="backToTopBtn" class="float-btn">⬆</button>
+<div class="floating-buttons">
+    <button id="darkModeBtn">☀</button>
+    <button id="backToTop">↑</button>
 </div>
 <!-- WHATSAPP BUTTON -->
 <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-btn">💬 WhatsApp</a>
@@ -510,11 +545,13 @@ body.dark footer {
 
 <script>
 const darkBtn = document.getElementById('darkModeBtn');
-const topBtn = document.getElementById('backToTopBtn');
+const topBtn = document.getElementById('backToTop');
 
-darkBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-});
+if (darkBtn) {
+    darkBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+    });
+}
 
 window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
@@ -524,9 +561,11 @@ window.addEventListener('scroll', () => {
     }
 });
 
-topBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+if (topBtn) {
+    topBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
 
 // APPLY FORM
 const applyForm = document.getElementById('applyForm');
